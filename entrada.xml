@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<config>
+    <listaDrones>
+        <dron>D01</dron> 
+        <dron>D02</dron>
+        <dron>D03</dron>
+        <dron>D07</dron>
+        <dron>D04</dron>
+        <dron>D05</dron>
+    </listaDrones>
+    <listaSistemasDrones>
+        <sistemaDrones nombre="Sistema1">
+            <alturaMaxima>15</alturaMaxima>
+            <cantidadDrones>5</cantidadDrones>
+            <contenido>
+                <dron>D01</dron>
+                <alturas>
+                    <altura valor="1">D</altura>
+                    <altura valor="2">$</altura>
+                    <altura valor="3">O</altura>
+                    <altura valor="4">!</altura>
+                    <altura valor="5">T</altura>
+                    <altura valor="6">S</altura>
+                    <altura valor="7">H</altura>
+                    <altura valor="8">I</altura>
+                    <altura valor="9">@</altura>
+                    <altura valor="10">G</altura>
+                    <altura valor="11">X</altura>
+                    <altura valor="12">A</altura>
+                    <altura valor="13">M</altura>
+                    <altura valor="14">K</altura>
+                    <altura valor="15">E</altura>
+                </alturas>
+            </contenido>
+            <contenido>
+                <dron>D02</dron>
+                <alturas>
+                    <altura valor="1">A</altura>
+                    <altura valor="2">P</altura>
+                    <altura valor="3">O</altura>
+                    <altura valor="4">!</altura>
+                    <altura valor="5">M</altura>
+                    <altura valor="6">L</altura>
+                    <altura valor="7">G</altura>
+                    <altura valor="8">R</altura>
+                    <altura valor="9">V</altura>
+                    <altura valor="10">@</altura>
+                    <altura valor="11">Y</altura>
+                    <altura valor="12">N</altura>
+                    <altura valor="13">X</altura>
+                    <altura valor="14">U</altura>
+                    <altura valor="15">%</altura>
+                </alturas>
+            </contenido>
+            <contenido>
+                <dron>D03</dron>
+                <alturas>
+                    <altura valor="1">L</altura>
+                    <altura valor="2">B</altura>
+                    <altura valor="3">A</altura>
+                    <altura valor="4">?</altura>
+                    <altura valor="5">S</altura>
+                    <altura valor="6">R</altura>
+                    <altura valor="7">H</altura>
+                    <altura valor="8">E</altura>
+                    <altura valor="9">T</altura>
+                    <altura valor="10">C</altura>
+                    <altura valor="11">J</altura>
+                    <altura valor="12">P</altura>
+                    <altura valor="13">U</altura>
+                    <altura valor="14">Y</altura>
+                    <altura valor="15">!</altura>
+                </alturas>
+            </contenido>
+            <contenido>
+                <dron>D04</dron>
+                <alturas>
+                    <altura valor="1">C</altura>
+                    <altura valor="2">B</altura>
+                    <altura valor="3">E</altura>
+                    <altura valor="4">P</altura>
+                    <altura valor="5">M</altura>
+                    <altura valor="6">G</altura>
+                    <altura valor="7">F</altura>
+                    <altura valor="8">Q</altura>
+                    <altura valor="9">X</altura>
+                    <altura valor="10">!</altura>
+                    <altura valor="11">X</altura>
+                    <altura valor="12">N</altura>
+                    <altura valor="13">V</altura>
+                    <altura valor="14">?</altura>
+                    <altura valor="15">A</altura>
+                </alturas>
+            </contenido>
+            <contenido>
+                <dron>D05</dron>
+                <alturas>
+                    <altura valor="1">L</altura>
+                    <altura valor="2">B</altura>
+                    <altura valor="3">Y</altura>
+                    <altura valor="4"> </altura>
+                    <altura valor="5">Q</altura>
+                    <altura valor="6">N</altura>
+                    <altura valor="7">P</altura>
+                    <altura valor="8">R</altura>
+                    <altura valor="9">A</altura>
+                    <altura valor="10">V</altura>
+                    <altura valor="11">!</altura>
+                    <altura valor="12">I</altura>
+                    <altura valor="13">S</altura>
+                    <altura valor="14">O</altura>
+                    <altura valor="15">?</altura>
+                </alturas>
+            </contenido>
+        </sistemaDrones>
+    </listaSistemasDrones>
+    <listaMensajes>
+        <Mensaje nombre="Prueba">
+            <sistemaDrones>SD1</sistemaDrones>
+            <instrucciones>
+                <instruccion dron="D01">7</instruccion>
+                <instruccion dron="D02">3</instruccion>
+                <instruccion dron="D03">1</instruccion>
+                <instruccion dron="D04">15</instruccion>
+                <instruccion dron="D05">4</instruccion>
+                <instruccion dron="D04">5</instruccion>
+                <instruccion dron="D03">13</instruccion>
+                <instruccion dron="D02">12</instruccion>
+                <instruccion dron="D01">1</instruccion>
+                <instruccion dron="D05">14</instruccion>
+                <instruccion dron="D04">10</instruccion>
+            </instrucciones>
+        </Mensaje>
+    </listaMensajes>
+</config>
