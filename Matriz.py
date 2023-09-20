@@ -90,7 +90,7 @@ class Matriz:
                 break
             tempy = tempy.down
         while True:
-            if tempy.posX == new_Nodo.posY:
+            if tempy.posX == new_Nodo.posX:
                 break
             elif tempy.right != None and tempy.right.posX > new_Nodo.posX:
                 new_Nodo.right = tempy.right
@@ -161,8 +161,10 @@ class Matriz:
             grp += 'Sin elementos en matriz'
         return grp
     
-Mtrz = Matriz()
-Mtrz.insertElm(1,1)
-
-
-print(Mtrz.reporte())
+# Mtrz = Matriz()
+# Mtrz.insertElm(1,2)
+# Mtrz.insertElm(1,5)
+# Mtrz.insertElm(2,2)
+# Mtrz.insertElm(6,2)
+# Mtrz.insertElm(6,8)
+# print(Mtrz.reporte()

@@ -31,7 +31,8 @@ def lector_Xml(Docx):
                     print(f'{i} -> {dr}')
                     for alturas in contenido.findall('alturas'):
                         for altura in alturas.findall('altura'):
-                            print(f'{i}:{altura.get("valor")} <-> {altura.text}')   
+                            print(f'{i}:{altura.get("valor")} <-> {altura.text}')
+                            Mtrz.insertElm(int(i),int(altura.get('valor')))   
                     
     except:
         print('Error!')
@@ -60,6 +61,7 @@ while opc != 'x':
             print('<------------------>')
             listDron.enlist()
             print('<------------------>')
+            print(Mtrz.reporte())
         else:
             print('error!')
     elif opc == 'b':
