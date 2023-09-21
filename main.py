@@ -65,7 +65,9 @@ while opc != 'x':
         else:
             print('error!')
     elif opc == 'b':
-        pass
+        veriDron = input('Nombre: ')
+        resp =listDron.verificarE(veriDron)
+        print(resp)
     elif opc == 'c':
         pass
     elif opc == 'd':

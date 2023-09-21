@@ -48,6 +48,17 @@ class listDron:
             while aux:
                 print(f'{aux.indice}:{aux.dato.name}')
                 aux=aux.next
+    
+    def enlistRt(self):
+        list = ''
+        if self.first == None:
+            return None
+        else:
+            aux = self.first
+            while aux:
+                list+=(f' - {aux.indice}:{aux.dato.name}\n')
+                aux=aux.next
+        return list
 
     def Search_i(self,dron):
         if self.first is None:
@@ -58,3 +69,11 @@ class listDron:
                 if dron == aux.dato.name:
                     return aux.indice
                 aux = aux.next
+
+    def verificarE(self,dron):
+        aux = self.first
+        while aux:
+            if dron == aux.dato.name:
+                return False
+            aux = aux.next
+        return True
