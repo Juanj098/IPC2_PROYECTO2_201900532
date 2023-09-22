@@ -103,13 +103,13 @@ class Matriz:
             else:
                 tempy = tempy.right
 
-    def insertElm(self,x,y):
+    def insertElm(self,x,y,txt):
         text = f'{x},{y}'
         nFila = self.searchF(y)
         nCol = self.searchC(x)
         if (nFila  is None) and (nCol is None): #fila y columna no existen
             self.insertCol(x,f'C{x}')
-            self.insertFil(y,f'F{y}')
+            self.insertFil(y,f'{y}')
             self.newNodo(x,y,text)
         elif (nFila is None) and (nCol != None): #fila no existe / columna si existe
             self.insertFil(y,f'F{y}')
@@ -160,11 +160,3 @@ class Matriz:
         else:
             grp += 'Sin elementos en matriz'
         return grp
-    
-# Mtrz = Matriz()
-# Mtrz.insertElm(1,2)
-# Mtrz.insertElm(1,5)
-# Mtrz.insertElm(2,2)
-# Mtrz.insertElm(6,2)
-# Mtrz.insertElm(6,8)
-# print(Mtrz.reporte()

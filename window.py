@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter import ttk
+import subprocess
 from tkinter import *
 from tkinter.filedialog import askopenfile
 from tkinter import messagebox
@@ -8,8 +10,13 @@ import os
 from Matriz import Matriz
 from list_dron import listDron
 from dron import Dron
+from list_sistems import List_Sistemas
+from sistemas import Sistemas_Dron
+
+l_sist = List_Sistemas()
 
 l_Dron = listDron()
+
 name_Doc = None
 class Window(Frame):
 
@@ -120,7 +127,8 @@ class Window(Frame):
             text='Sistemas Dron',
             font=('Jetbrains mono',16),
             width=16,
-            height=1
+            height=1,
+            command=self.Gest_Sistemas
         )
         Btn4.pack(
             side=tk.TOP,
@@ -184,6 +192,7 @@ class Window(Frame):
             name = os.path.basename(path)
             name_Doc = name
             l_Dron.Clear()
+            l_sist.clear()
             self.tree_xml(name)
             print('<-------------->')
             l_Dron.enlist()
@@ -200,6 +209,15 @@ class Window(Frame):
                     new_dron = Dron(dron.text)
                     l_Dron.new_Dron(new_dron)
             l_Dron.Actualizar_i()
+            for elm in root.findall('listaSistemasDrones'):
+                for sistemaD in elm.findall('sistemaDrones'):
+                    nombreS = sistemaD.get('nombre')
+                    x = sistemaD.find('cantidadDrones').text
+                    y = sistemaD.find('alturaMaxima').text
+                    sistem = Sistemas_Dron(nombreS,x,y)
+                    l_sist.New_sistema(sistem)
+            l_sist.Actualizar_i()
+
         except:
             print('Error!')
 
@@ -245,7 +263,7 @@ class Window(Frame):
                 if l_Dron.verificarE(nDron):
                     n_Dron = Dron(nDron)
                     l_Dron.new_Dron(n_Dron)
-                    l_Dron.Actualizar_i
+                    l_Dron.Actualizar_i()
                     list = l_Dron.enlistRt()
                     txt = 'Lista de Drones:\n'
                     txt+=list
@@ -264,8 +282,6 @@ class Window(Frame):
         nameDron = Entry(root2,font=('Jetbrain mono',16))
         nameDron.place(x=175,y=50)
         
-
-
         def cerrar_root2():
             root2.destroy()
 
@@ -277,5 +293,96 @@ class Window(Frame):
         salir.pack(padx=5,pady=5,side=tk.RIGHT)
         root2.mainloop()
 
+    def Gest_Sistemas(self):
+        global name_Doc
+        if name_Doc != None:
+            self.Text1.configure(state='normal')
+            self.Text1.delete(1.0,tk.END)
+            self.Text1.configure(state='disabled')
+            self.Btn6.configure(state='disabled')
+            print(l_sist.GraficarL())
+            dot_file="gsist.dot"
+            output_file="gsist.png"
+            subprocess.run(["dot","-Tpng",dot_file,"-o",output_file])
+            ventana = tk.Toplevel()
+            ventana.iconbitmap('src\estadisticas.ico')
+            ventana.title(".dot")
+        
+            # Carga la imagen en un widget Label
+            imagen = tk.PhotoImage(file=output_file)
+            label = ttk.Label(ventana, image=imagen)
+            label.pack()
+        
+            ventana.mainloop()
+        else:
+            messagebox.showerror('Error','Ingrese Documento Xml')
 
-    
+
+    def Gest_Msn(self):
+        global name_Doc
+        
+        self.Text1.configure(state='normal')
+        self.Text1.delete(1.0,tk.END)
+        self.Text1.configure(state='disabled')
+        self.Btn6.configure(state='disabled')
+
+
+        if name_Doc != None:
+            gSistema = tk.Tk()
+            gSistema.title('Gestion de Sistema de Drones')
+            gSistema.geometry('900x600')
+            gSistema.resizable(False,False)
+            gSistema.iconbitmap('src/locador.ico')
+            gSistema.config(bg='#2bc48a')
+            Ltitle = tk.Label(gSistema,text='Gestion de sistemas',justify='center',font=('Jetbrains mono',16),bg='#2bc48a')
+            Ltitle.pack(
+                padx=5,
+                pady=5,
+                side=tk.TOP
+            )
+            txt2 = tk.Text(
+                gSistema,
+                state=DISABLED,
+                bg='#286997',
+                font=('Jetbrains mono',16),
+                width=30,
+                height=10
+                )
+            txt2.place(
+                x=15,
+                y= 40
+            )
+            Sislabel = tk.Label(
+                gSistema,
+                text='Nombre de sistema',
+                font=('Jetbrains mono',14),
+                bg='#2bc48a'
+            )
+            Sislabel.place(x=10,y=325)
+            list_s = tk.Entry(gSistema, font=('Jetbrains mono',14),width=18)
+            list_s.place(x=205,y=325)
+            BtonMtrz = tk.Button(gSistema,text='Generar Grafica',font=('Jetbrains Mono',16))
+            BtonMtrz.place(x=100,y=375)
+            l_sist.enlist()
+        elif name_Doc is None:
+            messagebox.showerror('Error','Ingrese Documento Xml')
+
+    def Mtrz(self):
+        global name_Doc
+        if name_Doc != None:
+            
+            l_sist.clear()
+
+            tree = ET.parse(name_Doc)
+            root = tree.getroot()
+            for elm in root.findall('listaSistemasDrones'):
+                for sistema in elm.findall('sistemaDrones'):
+                    name = sistema.get('nombre')
+                    x = sistema.find('alturaMaxima').text
+                    y = sistema.find('cantidadDrones').text
+                    newSist = Sistemas_Dron(name,x,y)
+                    l_sist.New_sistema(newSist)
+            l_sist.Actualizar_i()
+            l_sist.enlist()
+        else:
+            messagebox.showerror('Error','Ingrese Documento Xml')

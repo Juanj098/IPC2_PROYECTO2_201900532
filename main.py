@@ -4,7 +4,11 @@ import os
 
 from dron import Dron
 from list_dron import listDron
+from list_sistems import List_Sistemas
+from sistemas import Sistemas_Dron
 from Matriz import Matriz
+
+list_Sist = List_Sistemas() 
 
 listDron = listDron()
 Mtrz = Matriz()
@@ -25,15 +29,9 @@ def lector_Xml(Docx):
                 x = sistema.find('cantidadDrones').text
                 y = sistema.find('alturaMaxima').text
                 print(f'{x}:{y}')
-                for contenido in sistema.findall('contenido'):
-                    dr = contenido.find('dron').text
-                    i = listDron.Search_i(dr)
-                    print(f'{i} -> {dr}')
-                    for alturas in contenido.findall('alturas'):
-                        for altura in alturas.findall('altura'):
-                            print(f'{i}:{altura.get("valor")} <-> {altura.text}')
-                            Mtrz.insertElm(int(i),int(altura.get('valor')))   
-                    
+                newSist = Sistemas_Dron(nombre,x,y)
+                list_Sist.New_sistema(newSist)
+        list_Sist.Actualizar_i()
     except:
         print('Error!')
 
@@ -69,7 +67,15 @@ while opc != 'x':
         resp =listDron.verificarE(veriDron)
         print(resp)
     elif opc == 'c':
-        pass
+        Dronn = input('ingrese nombre Dron:')
+        new = Dron(Dronn)
+        listDron.new_Dron(new)
+        listDron.Actualizar_i()
+        listDron.enlist()
+        print('<----------------->')
+        listT=listDron.enlistRt()
+        print('<----------------->')
+        list_Sist.enlist()
     elif opc == 'd':
         pass
     elif opc == 'e':
