@@ -12,7 +12,7 @@
          <alturaMaxima>7</alturaMaxima>
          <cantidadDrones>3</cantidadDrones>
          <contenido>
-            <dron>DronX</dron>
+            <dron>DronX</dron>         
             <alturas>
                <altura valor="1">A</altura>
                <altura valor="2">I</altura>

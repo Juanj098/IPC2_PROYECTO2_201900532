@@ -77,3 +77,4 @@ class listDron:
                 return False
             aux = aux.next
         return True
+    

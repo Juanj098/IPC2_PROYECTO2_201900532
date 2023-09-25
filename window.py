@@ -12,10 +12,15 @@ from list_dron import listDron
 from dron import Dron
 from list_sistems import List_Sistemas
 from sistemas import Sistemas_Dron
+from list_Msn import List_Msn
+from Mensajes import Mensaje
+from Mensajes import Instruccion
+from list_Instrucciones import list_Instrucciones
 
 l_sist = List_Sistemas()
-
+l_msn = List_Msn()
 l_Dron = listDron()
+l_instru = list_Instrucciones()
 
 name_Doc = None
 class Window(Frame):
@@ -141,7 +146,8 @@ class Window(Frame):
             text='Gestion Mensajes',
             font=('Jetbrains mono',16),
             width=16,
-            height=1
+            height=1,
+            command=self.Gest_Msn
         )
         Btn5.pack(
             side=tk.TOP,
@@ -192,10 +198,11 @@ class Window(Frame):
             name = os.path.basename(path)
             name_Doc = name
             l_Dron.Clear()
+            l_msn.clear()
             l_sist.clear()
+            l_instru.clear()
             self.tree_xml(name)
             print('<-------------->')
-            l_Dron.enlist()
         else:
             messagebox.showerror('Error','Error al leer documento!')
 
@@ -217,7 +224,22 @@ class Window(Frame):
                     sistem = Sistemas_Dron(nombreS,x,y)
                     l_sist.New_sistema(sistem)
             l_sist.Actualizar_i()
-
+            for elm in root.findall('listaMensajes'):
+                for mensaje in elm.findall('Mensaje'):
+                    nameMsn = mensaje.get('nombre')
+                    siste = mensaje.find('sistemaDrones').text
+                    new_msn = Mensaje(nameMsn,siste)
+                    l_msn.NewMenssage(new_msn)
+                    for inss in mensaje.findall('instrucciones'):
+                        no = 0
+                        for ins in inss.findall('instruccion'):
+                            no+=1
+                            nDron = ins.get('dron')
+                            alt = ins.text
+                            # print(f'{nameMsn} ->>{nDron} ->> {alt} ->> {no}')
+                            newInstruccion = Instruccion(nameMsn,siste,alt,nDron,no)
+                            l_instru.new_Instruccion(newInstruccion)
+            l_msn.ActualizarI()
         except:
             print('Error!')
 
@@ -319,6 +341,7 @@ class Window(Frame):
 
 
     def Gest_Msn(self):
+        listado = 'Listado Mensajes:\n'
         global name_Doc
         
         self.Text1.configure(state='normal')
@@ -344,7 +367,7 @@ class Window(Frame):
                 gSistema,
                 state=DISABLED,
                 bg='#286997',
-                font=('Jetbrains mono',16),
+                font=('Jetbrains mono',14),
                 width=30,
                 height=10
                 )
@@ -363,7 +386,31 @@ class Window(Frame):
             list_s.place(x=205,y=325)
             BtonMtrz = tk.Button(gSistema,text='Generar Grafica',font=('Jetbrains Mono',16))
             BtonMtrz.place(x=100,y=375)
-            l_sist.enlist()
+            state = True
+            cont = 1
+            while state != False:
+                resp = l_msn.SearchI(cont)
+                if resp != None:
+                    listado+=f'-> {resp}\n'
+                    state2 = True
+                    n = 1
+                    while state2 != False:
+                        re = l_instru.searchIn(resp,n)
+                        if re != None:
+                            listado+=f' -{re}\n'
+                            n+=1
+                        else:
+                            n = 1
+                            state2 = False
+                    cont+=1
+                else:
+                    state = False
+            # <-------------------------------->
+            txt2.configure(state='normal')
+            txt2.delete(1.0,tk.END)
+            txt2.insert(1.0,listado)
+            txt2.configure(state='disabled')
+
         elif name_Doc is None:
             messagebox.showerror('Error','Ingrese Documento Xml')
 
@@ -384,5 +431,6 @@ class Window(Frame):
                     l_sist.New_sistema(newSist)
             l_sist.Actualizar_i()
             l_sist.enlist()
+
         else:
             messagebox.showerror('Error','Ingrese Documento Xml')
