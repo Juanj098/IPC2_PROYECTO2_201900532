@@ -104,21 +104,21 @@ class Matriz:
                 tempy = tempy.right
 
     def insertElm(self,x,y,txt):
-        text = f'{x},{y}'
+        # text = f'{x},{y}'
         nFila = self.searchF(y)
         nCol = self.searchC(x)
         if (nFila  is None) and (nCol is None): #fila y columna no existen
-            self.insertCol(x,f'C{x}')
+            self.insertCol(x,f'{txt}')
             self.insertFil(y,f'{y}')
-            self.newNodo(x,y,text)
+            self.newNodo(x,y,txt)
         elif (nFila is None) and (nCol != None): #fila no existe / columna si existe
-            self.insertFil(y,f'F{y}')
-            self.newNodo(x,y,text)
+            self.insertFil(y,f'{y}')
+            self.newNodo(x,y,txt)
         elif (nFila != None) and (nCol is None): #fila si existe / columna no existe
-            self.insertCol(x,f'C{x}')
-            self.newNodo(x,y,text)
+            self.insertCol(x,f'{txt}')
+            self.newNodo(x,y,txt)
         elif (nFila != None) and (nCol != None): # fila y columna si existen
-            self.newNodo(x,y,text)
+            self.newNodo(x,y,txt)
         else:
             print('sale en vacas :c')
 
@@ -160,3 +160,4 @@ class Matriz:
         else:
             grp += 'Sin elementos en matriz'
         return grp
+

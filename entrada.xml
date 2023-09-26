@@ -115,8 +115,8 @@
         </sistemaDrones>
     </listaSistemasDrones>
     <listaMensajes>
-        <Mensaje nombre="Prueba">
-            <sistemaDrones>SD1</sistemaDrones>
+        <Mensaje nombre="prueba">
+            <sistemaDrones>Sistema1</sistemaDrones>
             <instrucciones>
                 <instruccion dron="D01">7</instruccion>
                 <instruccion dron="D02">3</instruccion>

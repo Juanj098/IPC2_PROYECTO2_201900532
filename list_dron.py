@@ -31,6 +31,7 @@ class listDron:
             else:
                 self.first = new_nodo
             new_nodo.next = aux
+        self.lenght+=1
         
     def Actualizar_i(self):
         aux = self.first
@@ -69,6 +70,16 @@ class listDron:
                 if dron == aux.dato.name:
                     return aux.indice
                 aux = aux.next
+        
+    def search_N(self,i):
+        if self.first is None:
+            return 'Lista vacia'
+        else:
+            aux = self.first
+            while aux:
+                if i == aux.indice:
+                    return aux.dato.name
+                aux = aux.next  
 
     def verificarE(self,dron):
         aux = self.first

@@ -57,3 +57,14 @@ class List_Msn:
                     return aux.dato.name
                 aux = aux.next
         return None
+    
+    def searchMsn(self,nombre):
+        if self.first is None:
+            return 'Lista Vacia'
+        else:
+            aux = self.first
+            while aux:
+                if nombre == aux.dato.name:
+                    return aux.dato.sistema
+                aux = aux.next
+        return None

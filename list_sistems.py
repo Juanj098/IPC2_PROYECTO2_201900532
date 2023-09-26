@@ -79,3 +79,24 @@ class List_Sistemas:
             Doc.close()
         os.system("dot -Tpng gsist.dot -o gsist.png")
 
+    def ObtenerX(self,name):
+        if self.first is None:
+            return None
+        else:
+            aux = self.first
+            while aux:
+                if name == aux.dato.name:
+                    return aux.dato.xMax
+                aux = aux.next
+        return None
+    
+    def ObtenerY(self,name):
+        if self.first is None:
+            return None
+        else:
+            aux = self.first
+            while aux:
+                if name == aux.dato.name:
+                    return aux.dato.yMax
+                aux = aux.next
+        return None

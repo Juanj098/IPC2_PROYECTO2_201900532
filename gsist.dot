@@ -3,8 +3,10 @@ digraph G {
     node[shape=circle,color=grey]
     Nodo0[label="Sistema 
  de Drones"]
-	Nodo1[label="Sistema1"]
+	Nodo1[label="SD1"]
+	Nodo2[label="SDF"]
 
 	Nodo0 -> Nodo1
+	Nodo0 -> Nodo2
 
 }

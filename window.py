@@ -16,8 +16,12 @@ from list_Msn import List_Msn
 from Mensajes import Mensaje
 from Mensajes import Instruccion
 from list_Instrucciones import list_Instrucciones
+from sistemas import Sistema_Char
+from sistChar import List_Char
 
+mtz = Matriz()
 l_sist = List_Sistemas()
+l_char = List_Char()
 l_msn = List_Msn()
 l_Dron = listDron()
 l_instru = list_Instrucciones()
@@ -223,6 +227,18 @@ class Window(Frame):
                     y = sistemaD.find('alturaMaxima').text
                     sistem = Sistemas_Dron(nombreS,x,y)
                     l_sist.New_sistema(sistem)
+                    for cont in sistemaD.findall('contenido'):
+                        Sdron = cont.find('dron').text
+                        iDron = l_Dron.Search_i(Sdron)
+                        nChar = Sistema_Char(nombreS,x,y,iDron,'0',Sdron)
+                        l_char.newChar(nChar)
+                        for alts in cont.findall('alturas'):
+                            for alt in alts.findall('altura'):
+                                h = alt.get('valor')
+                                c = alt.text
+                                # print(f'{nombreS}:{Sdron}:{iDron} -> {h}:{c}')
+                                nChar = Sistema_Char(nombreS,x,y,iDron,h,c)
+                                l_char.newChar(nChar)
             l_sist.Actualizar_i()
             for elm in root.findall('listaMensajes'):
                 for mensaje in elm.findall('Mensaje'):
@@ -368,7 +384,7 @@ class Window(Frame):
                 state=DISABLED,
                 bg='#286997',
                 font=('Jetbrains mono',14),
-                width=30,
+                width=35,
                 height=10
                 )
             txt2.place(
@@ -381,10 +397,37 @@ class Window(Frame):
                 font=('Jetbrains mono',14),
                 bg='#2bc48a'
             )
+
+            def genMrtz():
+                os.system('cls')
+                mtrz = nameM.get()
+                if (mtrz != None) and (mtrz != ''):
+                    searchS = l_msn.searchMsn(mtrz)
+                    if searchS != None:
+                        x = l_Dron.lenght
+                        y = l_sist.ObtenerY(searchS)
+                        if (x != None) and (y != None):
+                            print(f'{x}:{y} - {searchS}')
+                            for m in range(0,x+1): #x
+                                for n in range(0,int(y)+1): #y
+                                    ch= l_char.charXY(m,n,searchS)
+                                    if (m > 0) and (n == 0) and (ch != None):
+                                        mtz.insertCol(m,ch)
+                                    elif (m > 0) and (n > 0) and (ch != None):
+                                        mtz.insertElm(m,n,ch)
+                        with open('matriz.dot','w',encoding='UTF-8') as Doc:
+                            Doc.write(mtz.reporte())
+                            Doc.close()
+                        os.system("dot -Tpng matriz.dot -o matriz.png")
+                    else:
+                        print('dato no encontrado')
+                else:
+                    print('Ingrese mensaje a buscar')
+
             Sislabel.place(x=10,y=325)
-            list_s = tk.Entry(gSistema, font=('Jetbrains mono',14),width=18)
-            list_s.place(x=205,y=325)
-            BtonMtrz = tk.Button(gSistema,text='Generar Grafica',font=('Jetbrains Mono',16))
+            nameM = tk.Entry(gSistema, font=('Jetbrains mono',14),width=15)
+            nameM.place(x=205,y=325)
+            BtonMtrz = tk.Button(gSistema,text='Generar Grafica',font=('Jetbrains Mono',16),command=genMrtz)
             BtonMtrz.place(x=100,y=375)
             state = True
             cont = 1
@@ -417,20 +460,6 @@ class Window(Frame):
     def Mtrz(self):
         global name_Doc
         if name_Doc != None:
-            
-            l_sist.clear()
-
-            tree = ET.parse(name_Doc)
-            root = tree.getroot()
-            for elm in root.findall('listaSistemasDrones'):
-                for sistema in elm.findall('sistemaDrones'):
-                    name = sistema.get('nombre')
-                    x = sistema.find('alturaMaxima').text
-                    y = sistema.find('cantidadDrones').text
-                    newSist = Sistemas_Dron(name,x,y)
-                    l_sist.New_sistema(newSist)
-            l_sist.Actualizar_i()
-            l_sist.enlist()
-
+            l_char.enlistChar()
         else:
             messagebox.showerror('Error','Ingrese Documento Xml')
