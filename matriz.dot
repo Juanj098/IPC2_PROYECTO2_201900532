@@ -1,0 +1,38 @@
+digraph MatrizCapa{ 
+ node[shape=box] 
+ rankdir = UD; 
+ {rank = min; 
+nodo00[label="raiz", rankdir=LR, group="0"];
+nodo30[label="DronW", rankdir=LR, group="3"];
+nodo40[label="DronX", rankdir=LR, group="4"];
+nodo50[label="DronY", rankdir=LR, group="5"];
+nodo60[label="DronZ", rankdir=LR, group="6"];
+}
+{rank=same;
+nodo00[label="raiz",group="0"];
+nodo30[label="DronW",group="3"];
+nodo40[label="DronX",group="4"];
+nodo50[label="DronY",group="5"];
+nodo60[label="DronZ",group="6"];
+}
+{rank=same;
+nodo02[label="1",group="0"];
+nodo32[label="I",group="3"];
+nodo42[label="P",group="4"];
+nodo52[label="C",group="5"];
+nodo62[label="2",group="6"];
+}
+nodo00 -> nodo30 [dir = both]; 
+nodo30 -> nodo40 [dir = both]; 
+nodo40 -> nodo50 [dir = both]; 
+nodo50 -> nodo60 [dir = both]; 
+nodo02 -> nodo32 [dir = both]; 
+nodo32 -> nodo42 [dir = both]; 
+nodo42 -> nodo52 [dir = both]; 
+nodo52 -> nodo62 [dir = both]; 
+nodo00 -> nodo02 [dir = both]; 
+nodo30 -> nodo32 [dir = both]; 
+nodo40 -> nodo42 [dir = both]; 
+nodo50 -> nodo52 [dir = both]; 
+nodo60 -> nodo62 [dir = both]; 
+}

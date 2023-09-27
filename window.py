@@ -399,6 +399,7 @@ class Window(Frame):
             )
 
             def genMrtz():
+                mtz.clearM()
                 os.system('cls')
                 mtrz = nameM.get()
                 if (mtrz != None) and (mtrz != ''):

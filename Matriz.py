@@ -1,3 +1,4 @@
+
 class NodoM:
     def __init__(self,x,y,posicion) -> None:
         self.up = None
@@ -161,3 +162,14 @@ class Matriz:
             grp += 'Sin elementos en matriz'
         return grp
 
+    def clearM(self):
+        self.principal.down = None
+        self.principal.left = None
+        self.principal.right = None
+        self.principal.up = None
+
+
+    def recorrerXY(self,x,y):
+        tempX = self.principal
+        tempY = self.principal
+    
