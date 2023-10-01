@@ -6,6 +6,7 @@ from tkinter import *
 from tkinter.filedialog import askopenfile
 from tkinter import messagebox
 from PIL import ImageTk, Image
+from tkPDFViewer import tkPDFViewer as PDFviewer
 import xml.etree.ElementTree as ET
 import os
 from Matriz import Matriz
@@ -166,6 +167,7 @@ class Window(Frame):
             font=('Jetbrains mono',16),
             width=16,
             height=1,
+            command=self.visorPDF
             )
         BtnHelp.pack(
             side=tk.TOP,
@@ -341,10 +343,10 @@ class Window(Frame):
             with open('gsist.dot','w',encoding='UTF-8') as Doc:
                 Doc.write(grap)
                 Doc.close()
-            os.system("dot -Tpng gsist.dot -o gsist.png")
+            os.system("dot -Tpng -Gdpi=70 gsist.dot -o gsist.png")
             dot_file="gsist.dot"
             output_file="gsist.png"
-            subprocess.run(["dot","-Tpng",dot_file,"-o",output_file])
+            subprocess.run(["dot","-Tpng","-Gdpi=70",dot_file,"-o",output_file])
             ventana = tk.Toplevel()
             ventana.iconbitmap('src\estadisticas.ico')
             ventana.title(".dot")
@@ -374,7 +376,6 @@ class Window(Frame):
                 
                 nodos += f'\tNodo{i+1}[label="{nodo.name}"]\n'
                 ramas += f'\tNodo0 -> Nodo{i+1}\n'
-                ramasII = ''
 
                 for m in range(int(l_Dron.lenght)+1):
                     for n in range(int(nodo.yMax)+1):
@@ -521,3 +522,22 @@ class Window(Frame):
             l_char.enlistChar()
         else:
             messagebox.showerror('Error','Ingrese Documento Xml')
+
+
+    def visorPDF(self):
+        visor = tk.Toplevel()
+        visor.geometry("635x400")
+        visor.iconbitmap('src\\archivo-pdf.ico')
+        visor.resizable(False,False)
+        filename = 'Propuesta.pdf'
+        v1 = PDFviewer.ShowPdf()
+        v2 = v1.pdf_view(
+            visor,
+            pdf_location=open(filename,"r"),
+            height=200,
+            width=110
+        )
+        v2.pack()
+
+        visor.mainloop()
+
