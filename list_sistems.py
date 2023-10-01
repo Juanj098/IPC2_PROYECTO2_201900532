@@ -13,7 +13,7 @@ class List_Sistemas:
     def __init__(self) -> None:
         self.first = None
         self.i = 0
-        self.len = None
+        self.len = 0
 
     def clear(self):
         self.first = None
@@ -34,6 +34,7 @@ class List_Sistemas:
             else:
                 self.first = new_nodo
             new_nodo.next = aux 
+        self.len+=1
 
     def Actualizar_i(self):
         aux = self.first
@@ -74,10 +75,10 @@ class List_Sistemas:
             grp+=f'{ramas}\n'
             grp+='}'
         
-        with open('gsist.dot','w',encoding='UTF-8') as Doc:
-            Doc.write(grp)
-            Doc.close()
-        os.system("dot -Tpng gsist.dot -o gsist.png")
+        # with open('gsist.dot','w',encoding='UTF-8') as Doc:
+        #     Doc.write(grp)
+        #     Doc.close()
+        # os.system("dot -Tpng gsist.dot -o gsist.png")
 
     def ObtenerX(self,name):
         if self.first is None:
@@ -98,5 +99,16 @@ class List_Sistemas:
             while aux:
                 if name == aux.dato.name:
                     return aux.dato.yMax
+                aux = aux.next
+        return None
+    
+    def searchI(self,i):
+        if self.first is None:
+            return 'lISTA VACIA'
+        else:
+            aux = self.first
+            while aux:
+                if i == aux.i:
+                    return aux.dato
                 aux = aux.next
         return None

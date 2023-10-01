@@ -1,4 +1,6 @@
-
+import threading
+import concurrent.futures
+import time
 class NodoM:
     def __init__(self,x,y,posicion) -> None:
         self.up = None
@@ -8,6 +10,7 @@ class NodoM:
         self.posY = y
         self.posX = x
         self.pos = posicion
+        self.st = False
 
 class Matriz:
     def __init__(self) -> None:
@@ -124,7 +127,7 @@ class Matriz:
             print('sale en vacas :c')
 
     def reporte(self):
-        grp = 'digraph MatrizCapa{ \n node[shape=box] \n rankdir = UD; \n {rank = min; \n'
+        grp = 'digraph MatrizCapa{ \n node[shape=box,style = filled] \n rankdir = UD; \n {rank = min; \n'
         aux1 = self.principal
         aux2 = self.principal
         aux3 = self.principal
@@ -138,7 +141,10 @@ class Matriz:
                 aux1 = aux2
                 grp += '{rank=same;\n'
                 while aux1:
-                    grp += f'nodo{int(aux1.posX)+1}{int(aux1.posY)+1}[label="{aux1.pos}",group="{int(aux1.posX)+1}"];\n'
+                    if aux1.st is False:
+                        grp += f'nodo{int(aux1.posX)+1}{int(aux1.posY)+1}[label="{aux1.pos}",group="{int(aux1.posX)+1}"];\n'
+                    elif aux1.st is True:
+                        grp += f'nodo{int(aux1.posX)+1}{int(aux1.posY)+1}[label="{aux1.pos}",group="{int(aux1.posX)+1}",fillcolor="yellow"];\n'
                     aux1 = aux1.right
                 grp += '}\n'
                 aux2 = aux2.down
@@ -171,5 +177,12 @@ class Matriz:
 
     def recorrerXY(self,x,y):
         tempX = self.principal
-        tempY = self.principal
-    
+        while tempX:
+            if tempX.posX == x:
+                tempY = tempX
+                while tempY:
+                    if tempY.posY == y:
+                        tempY.st = True
+                        return(tempY.pos)
+                    tempY = tempY.down
+            tempX = tempX.right 

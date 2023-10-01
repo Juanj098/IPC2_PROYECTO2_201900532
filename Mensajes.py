@@ -11,7 +11,7 @@ class Instruccion(Mensaje):
         super().__init__(nombre, sistema)
         self.Dron = Dron
         self.Alt = Alt
-        self.no = no
+        self.no = int(no)
 
     def __str__(self) -> str:
         return f'Dron: {self.Dron}; Altura: {self.Alt}'

@@ -1,0 +1,14 @@
+
+saber si es ultimo dron:
+ 1 -> SD1
+ 130 -> DronW (3,0)
+ 140 -> DronY (4,0)
+ 150 -> DronZ (5,0)
+
+(sxy) -> s = sistema de Drones
+         x = posx en matriz <-> nombre dron
+         y = posy en matriz <-> alt -0-
+
+como saber cual es el ultimo dron del sistema?
+
+inicio last_dron = False

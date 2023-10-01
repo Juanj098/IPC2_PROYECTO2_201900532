@@ -25,7 +25,7 @@ class list_Instrucciones:
         else:
             aux = self.first
             while aux:
-                print(f'{aux.dato.Dron}')
+                print(f'{aux.dato.no}:{aux.dato.Dron} -> {aux.dato.sistema}')
                 aux = aux.next
     
     def clear(self):
@@ -41,3 +41,15 @@ class list_Instrucciones:
                     return aux.dato
                 aux = aux.next
         return None
+    
+    def searchInSyM(self,sistema,msn,no):
+        if self.first is None:
+            return 'Lista vacia'
+        else:
+            aux = self.first
+            while aux:
+                if (sistema == aux.dato.sistema) and (msn == aux.dato.name) and (no == aux.dato.no):
+                    return aux.dato
+                aux = aux.next
+        return None    
+    

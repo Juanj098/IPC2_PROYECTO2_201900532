@@ -41,3 +41,4 @@ class List_Char:
                     return aux.dato.char
                 aux = aux.next
         return None
+    

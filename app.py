@@ -6,5 +6,7 @@ app = Window(root)
 root.title('IPC2')
 root.iconbitmap('src\dron-alternativo.ico')
 root.resizable(False,False)
-root.config(bg='#6e4478')
+root.geometry('850x450')
+root.config(bg='#A0A0A0')
 root.mainloop()     
+# 
