@@ -9,4 +9,3 @@ root.resizable(False,False)
 root.geometry('850x450')
 root.config(bg='#A0A0A0')
 root.mainloop()     
-# 

@@ -453,7 +453,7 @@ class Window(Frame):
                                         mtz.insertCol(m,ch)
                                     elif (m > 0) and (n > 0) and (ch != None):
                                         mtz.insertElm(m,n,ch)
-                        self.Threads(searchS,mtrz)
+                        self.Threads(searchS,mtrz) #sistema, name mensaje ej. msg
                         with open('matriz.dot','w',encoding='UTF-8') as Doc:
                             Doc.write(mtz.reporte())
                             Doc.close()
@@ -499,22 +499,17 @@ class Window(Frame):
     def Threads(self,sistema,msg):
         print('it\' a threads!')
         cont = 1
-        messa = ''
-        def instruction():
-            nonlocal cont, messa
-            resp = l_instru.searchInSyM(sistema,msg,cont)
-            while resp != None:
-                cont+=1
-                if resp != None:
-                    x = l_Dron.Search_i(resp.Dron)
-                    m = mtz.recorrerXY(int(x),int(resp.Alt))
-                    messa+=m
-                resp = l_instru.searchInSyM(sistema,msg,cont)
-        tiempo = timeit.timeit(stmt=instruction,number=1)
-        print(f'Mensaje:{messa} // tiempo {tiempo} sgs.')
-
-       
-        # mtz.recorrerXY(3,5)
+        mess = ''
+        time = 0
+        searchI = l_instru.searchInSyM(sistema,msg,cont)
+        while searchI != None:
+            cont+=1
+            if searchI != None:
+                x = l_Dron.Search_i(searchI.Dron)
+                char = mtz.EjecutarInst(int(x),int(searchI.Alt))
+                mess += char
+            searchI = l_instru.searchInSyM(sistema,msg,cont)
+        print(f'Mensaje -> {mess}')
 
     def Mtrz(self):
         global name_Doc

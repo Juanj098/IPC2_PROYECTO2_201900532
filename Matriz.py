@@ -1,6 +1,9 @@
 import threading
 import concurrent.futures
 import time
+from pos import List_Pos,Posiciones
+
+l_pos = List_Pos()
 class NodoM:
     def __init__(self,x,y,posicion) -> None:
         self.up = None
@@ -183,6 +186,83 @@ class Matriz:
                 while tempY:
                     if tempY.posY == y:
                         tempY.st = True
-                        return(tempY.pos)
+                        return (tempY)
                     tempY = tempY.down
             tempX = tempX.right 
+
+    # EjecutarInst -> recibe pos x,y, verifica si la posicion existe en la lista si retorna el dato eso quiere decir que ya se tiene 
+    # registro de un dato en esa columna y retorna la posicion del dato anterior ingresado, si la nueva posicion es mayor a la anterior 
+    # el dron sube y si es menor el dron baja a la posicion; si retorna none busca el dato desde cero y agrega la posicion a la lista
+    # requerida desde la posicion pasada
+    def EjecutarInst(self,x,y):
+        # print(f'x -> {type(x)}: y -> {type(y)}')
+        posA = l_pos.SearchP(str(x),str(y))
+        if posA is None: #no hay registro de anterior
+            pos = Posiciones(x,y)
+            l_pos.new_Pos(pos)
+            m = self.recorrerXY(x,y).pos
+            return m
+        else: #hay registro de anterior
+            posDron = self.recorrerXY(x,y)
+            if int(posA.y) > y: # el dron baja
+                dif = int(posA.y) - int(y)
+                cont = 0
+                aux = posDron
+                while (cont < dif) and aux:
+                    if aux.up:
+                        aux = aux.up
+                        cont+=1
+                    else:
+                        break
+
+                l_pos.delPos(posA)
+                nPos = Posiciones(x,y)
+                l_pos.new_Pos(nPos)
+
+                if y == int(aux.posY):
+                    return aux.pos
+                else:
+                    return None
+                
+            elif int(posA).y < y: # el dron sube
+                dif = int(y) - int(posA.y)
+                cont = 0
+                aux = posDron
+                while aux and (cont < dif):
+                    if aux.down:
+                        aux = aux.down
+                        cont+=1
+                    else:
+                        break
+                l_pos.delPos(posA)
+                nPos = Posiciones(x,y)
+                l_pos.new_Pos(nPos)
+
+                if y == int(aux.posY):
+                    return aux.pos
+                else:
+                    return None
+
+            elif int(posA.y) == y: # el dron se mantiene en esa altura
+                return posDron.pos
+            else:
+                return None  
+
+            
+            
+# matt = Matriz()
+
+# matt.insertElm(1,1,'a')
+# matt.insertElm(1,2,'z')
+# matt.insertElm(2,1,'r')
+# matt.insertElm(2,2,'j')
+# l_pos.enlist()
+# print('-----------------')
+# z = matt.EjecutarInst(2,2)
+# l_pos.enlist()
+# print('-----------------')
+# z = matt.EjecutarInst(2,1)
+# l_pos.enlist()
+# print('------------')
+# print(z)
+
