@@ -20,6 +20,7 @@ from Mensajes import Instruccion
 from list_Instrucciones import list_Instrucciones
 from sistemas import Sistema_Char
 from sistChar import List_Char
+from M import List_M,Messenger
 
 mtz = Matriz()
 l_sist = List_Sistemas()
@@ -27,6 +28,7 @@ l_char = List_Char()
 l_msn = List_Msn()
 l_Dron = listDron()
 l_instru = list_Instrucciones()
+l_M = List_M()
 
 name_Doc = None
 class Window(Frame):
@@ -406,33 +408,33 @@ class Window(Frame):
         if name_Doc != None:
             gSistema = tk.Tk()
             gSistema.title('Gestion de Sistema de Drones')
-            gSistema.geometry('900x600')
+            gSistema.geometry('425x500')
             gSistema.resizable(False,False)
             gSistema.iconbitmap('src/locador.ico')
-            gSistema.config(bg='#2bc48a')
-            Ltitle = tk.Label(gSistema,text='Gestion de sistemas',justify='center',font=('Jetbrains mono',16),bg='#2bc48a')
+            gSistema.config(bg='#884088')
+            Ltitle = tk.Label(gSistema,text='Gestion de sistemas',justify='center',font=('Jetbrains mono',16),bg='#884088')
             Ltitle.pack(
-                padx=5,
+                padx=15,
                 pady=5,
                 side=tk.TOP
             )
             txt2 = tk.Text(
                 gSistema,
                 state=DISABLED,
-                bg='#286997',
+                bg='#D0C8D0',
                 font=('Jetbrains mono',14),
                 width=35,
                 height=10
                 )
             txt2.place(
-                x=15,
-                y= 40
+                x=17,
+                y= 50
             )
             Sislabel = tk.Label(
                 gSistema,
                 text='Nombre de sistema',
                 font=('Jetbrains mono',14),
-                bg='#2bc48a'
+                bg='#884088'
             )
 
             def genMrtz():
@@ -454,10 +456,26 @@ class Window(Frame):
                                     elif (m > 0) and (n > 0) and (ch != None):
                                         mtz.insertElm(m,n,ch)
                         self.Threads(searchS,mtrz) #sistema, name mensaje ej. msg
+                        datoMM = l_M.searchM(mtrz)
                         with open('matriz.dot','w',encoding='UTF-8') as Doc:
                             Doc.write(mtz.reporte())
                             Doc.close()
-                        os.system("dot -Tpng matriz.dot -o matriz.png")
+                        os.system("dot -Tpng -Gdpi=50 matriz.dot -o matriz.png")
+                        dot_file = "matriz.dot"
+                        outputM_file = "matriz.png"
+                        subprocess.run(["dot","-Tpng","-Gdpi=50",dot_file,"-o",outputM_file])
+                        MatDrons = tk.Toplevel()
+                        MatDrons.iconbitmap('src/almuerzo-cohete.ico')
+                        MatDrons.title("Mensaje")
+                        daa = f'Nombre: {datoMM.nameM}, Sistema: {datoMM.sitem}, Mensaje: {datoMM.txt}, Tiempo: {datoMM.time}'
+                        laberData = tk.Label(MatDrons,text=daa,font=('Jetbrains mono',10))
+                        laberData.pack(padx=5,pady=5)
+                        imag = tk.PhotoImage(file=outputM_file)
+                        Label = ttk.Label(MatDrons,image=imag)
+                        Label.pack()
+
+                        MatDrons.mainloop()
+
                     else:
                         print('dato no encontrado')
                 else:
@@ -493,6 +511,8 @@ class Window(Frame):
             txt2.insert(1.0,listado)
             txt2.configure(state='disabled')
 
+
+
         elif name_Doc is None:
             messagebox.showerror('Error','Ingrese Documento Xml')
 
@@ -510,6 +530,8 @@ class Window(Frame):
                 mess += char
             searchI = l_instru.searchInSyM(sistema,msg,cont)
         print(f'Mensaje -> {mess}')
+        objM = Messenger(msg,sistema,mess,"--")
+        l_M.newM(objM)
 
     def Mtrz(self):
         global name_Doc
