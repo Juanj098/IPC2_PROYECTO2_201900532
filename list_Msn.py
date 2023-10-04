@@ -10,6 +10,7 @@ class List_Msn:
     def __init__(self) -> None:
         self.first = None
         self.i = 0 
+        self.len = 0
     
     def NewMenssage(self,dato):
         newNodo = Nodo(dato,self.i)
@@ -26,6 +27,7 @@ class List_Msn:
             else:
                 self.first = newNodo
             newNodo.next = aux
+        self.len+=1
 
     def ActualizarI(self):
         cont = 0
@@ -46,6 +48,7 @@ class List_Msn:
 
     def clear(self):
         self.first = None
+        self.len = 0
 
     def SearchI(self,i):
         if self.first is None:

@@ -180,13 +180,15 @@ class Matriz:
 
     def recorrerXY(self,x,y):
         tempX = self.principal
+        t = 1
         while tempX:
             if tempX.posX == x:
                 tempY = tempX
                 while tempY:
                     if tempY.posY == y:
                         tempY.st = True
-                        return (tempY)
+                        return tempY,t
+                    t+=1
                     tempY = tempY.down
             tempX = tempX.right 
 
@@ -200,10 +202,11 @@ class Matriz:
         if posA is None: #no hay registro de anterior
             pos = Posiciones(x,y)
             l_pos.new_Pos(pos)
-            m = self.recorrerXY(x,y).pos
-            return m
+            m,t = self.recorrerXY(x,y)
+            return m.pos,t
         else: #hay registro de anterior
-            posDron = self.recorrerXY(x,y)
+            posDron,p = self.recorrerXY(x,y)
+            t = 1
             if int(posA.y) > y: # el dron baja
                 dif = int(posA.y) - int(y)
                 cont = 0
@@ -211,6 +214,7 @@ class Matriz:
                 while (cont < dif) and aux:
                     if aux.up:
                         aux = aux.up
+                        t+=1
                         cont+=1
                     else:
                         break
@@ -220,7 +224,7 @@ class Matriz:
                 l_pos.new_Pos(nPos)
 
                 if y == int(aux.posY):
-                    return aux.pos
+                    return aux.pos,t
                 else:
                     return None
                 
@@ -231,6 +235,7 @@ class Matriz:
                 while aux and (cont < dif):
                     if aux.down:
                         aux = aux.down
+                        t+=1
                         cont+=1
                     else:
                         break
@@ -239,12 +244,12 @@ class Matriz:
                 l_pos.new_Pos(nPos)
 
                 if y == int(aux.posY):
-                    return aux.pos
+                    return aux.pos,t
                 else:
                     return None
 
             elif int(posA.y) == y: # el dron se mantiene en esa altura
-                return posDron.pos
+                return posDron.pos,0
             else:
                 return None  
 

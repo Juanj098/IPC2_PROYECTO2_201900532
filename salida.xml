@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<respuesta>
+<listaMensaje>
+    <mensaje nombre ="msg">
+        <sistemaDrones> SD1 </sistemaDrones>
+        <tiempoOptimo> -- </tiempoOptimo>
+        <mensajeRecibido> IPC2 </mensajeRecibido>
+        <instrucciones>
+            <tiempo valor = '--'>
+                <acciones>
+                    <dron nombre = 'DronY'>3</dron>
+                    
+                </acciones>
+            </tiempo>
+        </instrucciones>
+    </mensaje>
+</listaMensaje>
+</respuesta>

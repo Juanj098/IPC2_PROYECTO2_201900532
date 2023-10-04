@@ -1,0 +1,66 @@
+<respuesta>
+    <listaMensaje>
+        <mensaje nombre="prueba">
+            <sistemaDrones>Sistema1</sistemaDrones>
+            <tiempoOptimo>--</tiempoOptimo>
+            <mensajeRecibido>HOLA MUNDO!</mensajeRecibido>
+            <instrucciones>
+                <tiempo valor="8">
+                    <acciones>
+                        <dron nombre="D01">7</dron>
+                    </acciones>
+                </tiempo>
+                <tiempo valor="4">
+                    <acciones>
+                        <dron nombre="D02">3</dron>
+                    </acciones>
+                </tiempo>
+                <tiempo valor="2">
+                    <acciones>
+                        <dron nombre="D03">1</dron>
+                    </acciones>
+                </tiempo>
+                <tiempo valor="16">
+                    <acciones>
+                        <dron nombre="D04">15</dron>
+                    </acciones>
+                </tiempo>
+                <tiempo valor="5">
+                    <acciones>
+                        <dron nombre="D05">4</dron>
+                    </acciones>
+                </tiempo>
+                <tiempo valor="6">
+                    <acciones>
+                        <dron nombre="D04">5</dron>
+                    </acciones>
+                </tiempo>
+                <tiempo valor="14">
+                    <acciones>
+                        <dron nombre="D03">13</dron>
+                    </acciones>
+                </tiempo>
+                <tiempo valor="13">
+                    <acciones>
+                        <dron nombre="D02">12</dron>
+                    </acciones>
+                </tiempo>
+                <tiempo valor="2">
+                    <acciones>
+                        <dron nombre="D01">1</dron>
+                    </acciones>
+                </tiempo>
+                <tiempo valor="15">
+                    <acciones>
+                        <dron nombre="D05">14</dron>
+                    </acciones>
+                </tiempo>
+                <tiempo valor="11">
+                    <acciones>
+                        <dron nombre="D04">10</dron>
+                    </acciones>
+                </tiempo>
+            </instrucciones>
+        </mensaje>
+    </listaMensaje>
+</respuesta>

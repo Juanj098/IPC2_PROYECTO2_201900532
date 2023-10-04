@@ -55,4 +55,7 @@ class List_Pos:
                     return aux.dato
                 aux = aux.next
         return None
+    
+    def clear(self):
+        self.first = None
         

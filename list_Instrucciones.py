@@ -42,6 +42,18 @@ class list_Instrucciones:
                 aux = aux.next
         return None
     
+    
+    def searchInsis(self,sistema,i,name):
+        if self.first is None:
+            return 'Lista vacia'
+        else:
+            aux = self.first
+            while aux:
+                if (name == aux.dato.name) and (sistema == aux.dato.sistema) and (i == aux.dato.no):
+                    return aux.dato
+                aux = aux.next
+        return None
+    
     def searchInSyM(self,sistema,msn,no):
         if self.first is None:
             return 'Lista vacia'

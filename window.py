@@ -21,6 +21,7 @@ from list_Instrucciones import list_Instrucciones
 from sistemas import Sistema_Char
 from sistChar import List_Char
 from M import List_M,Messenger
+from  movs import List_Movimientos,Movimientos
 
 mtz = Matriz()
 l_sist = List_Sistemas()
@@ -29,6 +30,7 @@ l_msn = List_Msn()
 l_Dron = listDron()
 l_instru = list_Instrucciones()
 l_M = List_M()
+l_movs = List_Movimientos()
 
 name_Doc = None
 class Window(Frame):
@@ -88,7 +90,8 @@ class Window(Frame):
             text='Inicializar',
             font=('Jetbrains mono',16),
             width=16,
-            height=1
+            height=1,
+            command=self.inicializar
         )
         Btn0.pack(side=tk.TOP,
                   padx=5,
@@ -113,7 +116,8 @@ class Window(Frame):
             text='Generar XML',
             font=('Jetbrains mono',16),
             width=16,
-            height=1
+            height=1,
+            command=self.outfileXml
         )
         Btn2.pack(
             side=tk.TOP,
@@ -517,19 +521,21 @@ class Window(Frame):
             messagebox.showerror('Error','Ingrese Documento Xml')
 
     def Threads(self,sistema,msg):
-        print('it\' a threads!')
         cont = 1
         mess = ''
-        time = 0
+        # time = 0
         searchI = l_instru.searchInSyM(sistema,msg,cont)
         while searchI != None:
             cont+=1
             if searchI != None:
                 x = l_Dron.Search_i(searchI.Dron)
-                char = mtz.EjecutarInst(int(x),int(searchI.Alt))
+                char, time = mtz.EjecutarInst(int(x),int(searchI.Alt))
+                # print(f'char -> {char}, t -> {time}')
+                nmov = Movimientos(char,time,msg,searchI.Dron,searchI.Alt)
+                l_movs.newMov(nmov)
                 mess += char
             searchI = l_instru.searchInSyM(sistema,msg,cont)
-        print(f'Mensaje -> {mess}')
+        # print(f'Mensaje -> {mess}')
         objM = Messenger(msg,sistema,mess,"--")
         l_M.newM(objM)
 
@@ -558,3 +564,78 @@ class Window(Frame):
 
         visor.mainloop()
 
+    def inicializar(self):
+        global name_Doc
+        name_Doc = None
+        l_char.clear()
+        mtz.clearM()
+        l_Dron.Clear()
+        l_movs.clear()
+        l_instru.clear()
+        l_msn.clear()
+        l_M.clear()
+        l_sist.clear()
+        self.Text1.configure(state='normal')
+        self.Text1.delete(1.0,tk.END)
+        self.Text1.configure(state='disabled')
+        self.Btn6.configure(state='disabled')
+
+
+    def outfileXml(self):
+        global name_Doc
+        if name_Doc != None:
+            ruta ='outXML.xml'
+            root = ET.Element('respuesta')
+            listMensaje = ET.SubElement(root,"listaMensaje")
+            r = int(l_msn.len)
+            for i in range(1,r+1):
+                mens = l_msn.SearchI(i)
+                mensaje = ET.SubElement(listMensaje,"mensaje",nombre = mens)
+                sistema= l_msn.searchMsn(mens)
+                sistemaD = ET.SubElement(mensaje,"sistemaDrones").text = sistema
+                self.genMrtz(mens)
+                t = l_M.searchM(mens)
+                tiempoOp = ET.SubElement(mensaje,"tiempoOptimo").text=t.time
+                mensajeRecibido = ET.SubElement(mensaje,"mensajeRecibido").text=t.txt
+                instrucciones = ET.SubElement(mensaje,"instrucciones")
+                cont = 1
+                busque = l_instru.searchInsis(sistema,cont,mens)
+                while busque != None:
+                    cont+=1
+                    if busque != None:
+                        tiem = l_movs.searchtime(busque.Dron,busque.Alt,busque.name)
+                        tiempo = ET.SubElement(instrucciones,"tiempo",valor= str(tiem))
+                        acciones = ET.SubElement(tiempo,"acciones")
+                        dron = ET.SubElement(acciones,"dron",nombre = busque.Dron).text = busque.Alt
+                        print(f'dron: {busque.Dron}, mensaje:{busque.name}')  
+                    busque = l_instru.searchInsis(sistema,cont,mens)
+            
+            archivo = ET.ElementTree(root)
+            archivo.write(ruta)
+            messagebox.showinfo('Listo!','Archivo Creado con exito')
+        else:
+            messagebox.showerror('Error','Ingrese Documento Xml')
+
+    def genMrtz(self,msnfu):
+        mtz.clearM()
+        os.system('cls')
+        mtrz = msnfu
+        if (mtrz != None) and (mtrz != ''):
+            searchS = l_msn.searchMsn(mtrz)
+            if searchS != None:
+                x = l_Dron.lenght
+                y = l_sist.ObtenerY(searchS)
+                if (x != None) and (y != None):
+                    print(f'{x}:{y} - {searchS}')
+                    for m in range(0,x+1): #x
+                        for n in range(0,int(y)+1): #y
+                            ch= l_char.charXY(m,n,searchS)
+                            if (m > 0) and (n == 0) and (ch != None):
+                                mtz.insertCol(m,ch)
+                            elif (m > 0) and (n > 0) and (ch != None):
+                                mtz.insertElm(m,n,ch)
+                self.Threads(searchS,mtrz) #sistema, name mensaje ej. msg
+            else:
+                print('dato no encontrado')
+        else:
+            print('Ingrese mensaje a buscar')

@@ -51,3 +51,6 @@ class List_M:
             while aux:
                 print(aux.dato)
                 aux = aux.next
+
+    def clear(self):
+        self.first = None
