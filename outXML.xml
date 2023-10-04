@@ -1,63 +1,55 @@
 <respuesta>
     <listaMensaje>
-        <mensaje nombre="prueba">
-            <sistemaDrones>Sistema1</sistemaDrones>
+        <mensaje nombre="msg">
+            <sistemaDrones>SD1</sistemaDrones>
             <tiempoOptimo>--</tiempoOptimo>
-            <mensajeRecibido>HOLA MUNDO!</mensajeRecibido>
+            <mensajeRecibido>IPC2</mensajeRecibido>
             <instrucciones>
-                <tiempo valor="8">
+                <tiempo valor="3">
                     <acciones>
-                        <dron nombre="D01">7</dron>
+                        <dron nombre="DronX">2</dron>
                     </acciones>
                 </tiempo>
                 <tiempo valor="4">
                     <acciones>
-                        <dron nombre="D02">3</dron>
+                        <dron nombre="DronY">3</dron>
+                    </acciones>
+                </tiempo>
+                <tiempo valor="3">
+                    <acciones>
+                        <dron nombre="DronZ">2</dron>
                     </acciones>
                 </tiempo>
                 <tiempo valor="2">
                     <acciones>
-                        <dron nombre="D03">1</dron>
+                        <dron nombre="DronY">1</dron>
                     </acciones>
                 </tiempo>
-                <tiempo valor="16">
+            </instrucciones>
+        </mensaje>
+        <mensaje nombre="msg2">
+            <sistemaDrones>SDF</sistemaDrones>
+            <tiempoOptimo>--</tiempoOptimo>
+            <mensajeRecibido>IPC2</mensajeRecibido>
+            <instrucciones>
+                <tiempo valor="2">
                     <acciones>
-                        <dron nombre="D04">15</dron>
-                    </acciones>
-                </tiempo>
-                <tiempo valor="5">
-                    <acciones>
-                        <dron nombre="D05">4</dron>
-                    </acciones>
-                </tiempo>
-                <tiempo valor="6">
-                    <acciones>
-                        <dron nombre="D04">5</dron>
-                    </acciones>
-                </tiempo>
-                <tiempo valor="14">
-                    <acciones>
-                        <dron nombre="D03">13</dron>
-                    </acciones>
-                </tiempo>
-                <tiempo valor="13">
-                    <acciones>
-                        <dron nombre="D02">12</dron>
+                        <dron nombre="DronW">1</dron>
                     </acciones>
                 </tiempo>
                 <tiempo valor="2">
                     <acciones>
-                        <dron nombre="D01">1</dron>
+                        <dron nombre="DronX">1</dron>
                     </acciones>
                 </tiempo>
-                <tiempo valor="15">
+                <tiempo valor="2">
                     <acciones>
-                        <dron nombre="D05">14</dron>
+                        <dron nombre="DronY">1</dron>
                     </acciones>
                 </tiempo>
-                <tiempo valor="11">
+                <tiempo valor="2">
                     <acciones>
-                        <dron nombre="D04">10</dron>
+                        <dron nombre="DronZ">1</dron>
                     </acciones>
                 </tiempo>
             </instrucciones>

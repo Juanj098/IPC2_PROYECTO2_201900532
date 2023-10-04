@@ -552,7 +552,7 @@ class Window(Frame):
         visor.geometry("635x400")
         visor.iconbitmap('src\\archivo-pdf.ico')
         visor.resizable(False,False)
-        filename = 'Propuesta.pdf'
+        filename = 'Manual de usuarioP2.pdf'
         v1 = PDFviewer.ShowPdf()
         v2 = v1.pdf_view(
             visor,
